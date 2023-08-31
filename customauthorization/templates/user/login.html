@@ -1,0 +1,36 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+<div class="form-wrapper">
+    <div class="mb-3">
+        <h2 class="text-center">Login</h2>
+        <hr>
+    </div>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label">Username </label>
+            {{ form.username }}
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Password </label>
+            {{ form.password }}
+            
+        </div>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-danger">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        <!-- {{ form.as_p }} -->
+        <button class="btn btn-primary" type="submit">Login</button>
+
+    </form>
+</div>
+
+
+{% endblock content %}

@@ -1,0 +1,139 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<style>
+    tr,
+    td,
+    th {
+        color: white;
+    }
+
+    .form-lable {
+        display: inline;
+    }
+
+    .form-select {
+        width: 100%;
+        padding: 6px;
+        border-radius: 5px;
+    }
+
+
+    .mt-3 {
+
+        max-height: 300px;
+        /* Adjust the desired maximum height */
+        overflow: auto;
+    }
+
+    .mt-3::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .mt-3::-webkit-scrollbar-thumb {
+        background-color: #007BFF;
+        /* Change this to the desired thumb color */
+        border-radius: 6px;
+    }
+
+    .form-control {
+        width: 100%;
+        margin-right: 10px;
+    }
+
+    .search-btn-wrapper {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4">
+            <form action="/add-todo/" method="post">
+                {% csrf_token %}
+                <!-- {{form.as_p}} -->
+                <div class="mb-3">
+                    <label for="for-title" class="form-label">Title</label>
+                    {{ form.title }}
+                </div>
+                <div class="mb-3">
+                    <label for="for-status" class="form-label">Status</label>
+                    {{ form.status }}
+                </div>
+                <div class="mb-3">
+                    <label for="for-priority" class="form-label">Priority</label>
+                    {{ form.priority }}
+                </div>
+                <input class="btn btn-primary" type="submit" value="ADD" id="">
+            </form>
+
+        </div>
+
+        <div class="col mt-3">
+            <div class="pt-2">
+                <div class="">
+                    <form  class="mb-2 search-btn-wrapper" method="GET">
+                        <input type="text" class="form-control" name="search-area">
+                        <input class="btn btn-warning" type="submit" value="Search">
+                        <a href="{% url 'addTodoPage' %} " class="ml-2">
+                            <button type="button" class="btn btn-light">
+                                Refresh
+                            </button>
+                        </a>
+                        
+                        
+                    </form>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Title</th>
+                            <th>Status</th>
+                            <th>Priority</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% if todos|length == 0 %}
+                          <tr>
+                            <td colspan="5">
+                              <h4 style="display: flex; align-items: center; justify-content: center; height: 100%;">No todos Found :(</h4>
+                            </td>
+                          </tr>
+                        {% else %}
+                          {% for todo in todos %}
+                            <tr>
+                              <td>{{ forloop.counter }}</td>
+                              <td>{{ todo.title }}</td>
+                              <td>
+                                {% if todo.status == 'C' %}
+                                  ✅
+                                {% else %}
+                                  🕒
+                                {% endif %}
+                              </td>
+                              <td>{{ todo.priority }}</td>
+                              <td>
+                                <a href="/delete-todo/{{ todo.id }}" title="Delete" class="">🗑️</a>
+                                {% if todo.status == 'P' %}
+                                  <a href="/change-status/{{ todo.id }}/C" title="Mark Completed" class="">✅</a>
+                                {% else %}
+                                  <a href="/change-status/{{ todo.id }}/P" title="Mark Pending" class="">🕒</a>
+                                {% endif %}
+                              </td>
+                            </tr>
+                          {% endfor %}
+                        {% endif %}
+                      </tbody>
+                      
+                </table>
+            </div>
+            
+        </div>
+    </div>
+
+</div>
+{% endblock content %}

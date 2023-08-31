@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% if title %}
+  <title>{{ title }}</title>
+  {% else %}
+  <title>Home | TOLOG</title>
+  {% endif %}
+  <link rel="stylesheet" type="text/css" href="{% static 'blog/style.css' %}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+
+</head>
+
+<body>
+
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Navbar</a>
+    <div class="nav-links-wrapper" id="navbarNavDropdown">
+      <div class="nav-links-left">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'blogPage' %}">Blogs<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'addTodoPage' %}">Todos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'aboutPage' %}">About</a>
+          </li>
+          
+        </ul>
+      </div>
+      <div class="nav-links-right">
+        <ul class="navbar-nav">
+          {% if user.is_authenticated %}
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logoutPage' %}">Logout</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/">Admin</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'loginPage' %}">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'registerPage' %}">Register</a>
+          </li>
+          
+          {% endif %}
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <section class="container-wrappper">
+    <div class="content-wrappper">
+      {% block content %}{% endblock content %}
+    </div>
+
+  </section>
+</body>
+
+</html>

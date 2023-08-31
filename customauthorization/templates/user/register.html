@@ -1,0 +1,61 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+
+<div class="form-wrapper">
+    <div class="mb-3">
+        <h2 class="text-center">Register</h2>
+        <hr>
+    </div>
+    <style>
+        .alert-danger {
+            list-style-type: none;
+        }
+    </style>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="for-username" class="form-label">Username </label>
+            {{ form.username }}
+            {% if form.errors.username %}
+            <div class="alert alert-danger">
+                {% for error in form.username.errors %}
+                {{ error }}
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- <br> -->
+        <div class="mb-3">
+            <label for="for-password1" class="form-label">Password </label>
+            {{ form.password1 }}
+            {% if form.errors.password1 %}
+            <div class="alert alert-danger">
+                {% for error in form.password1.errors %}
+                {{ error }}
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        <!-- <br> -->
+        <div class="mb-3">
+            <label for="for-password2" class="form-label">Re-enter Password </label>
+            {{ form.password2 }}
+            {% if form.errors.password2 %}
+            <div class="alert alert-danger">
+                {% for error in form.password2.errors %}
+                {{ error }}
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        <!-- <br> -->
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+
+</div>
+
+
+{% endblock content %}

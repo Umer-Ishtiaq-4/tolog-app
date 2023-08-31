@@ -1,0 +1,55 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+<div class="blogs-wrapper">
+    <h2 class="text-center">Hi {{ user.username }}!! - Blogs</h2>
+    <hr>
+
+    {% if posts|length == 0 %}
+        <h4>Start writting your for first post :)</h4>
+    {% else %}
+    {% for post in posts %}
+    <div class="blog-wrapper">
+        <div>
+            <h4 class="title">Title: </h4>{{ post.title}}
+        </div>
+        <div>
+            <h4 class="title">Author: </h4>{{ post.author}}
+        </div>
+        <div>
+            <h4 class="title">Content: </h4>{{ post.content}}
+        </div>
+        <div>
+            <h4 class="title">Date Published: </h4>{{ post.published_date }}
+        </div>
+        <div>
+            <h4 class="title">Last Updated: </h4>{{ post.last_updated }}
+        </div>
+    </div>
+
+    <a href="/delete-blog/{{post.id}}" title="Delete" class="">
+        <button type="button" class="btn btn-danger">
+            Delete
+        </button></a>
+
+    <a href="/update-blog/{{post.id}}" title="Update" class="">
+        <button type="button" class="btn btn-warning">
+            Update
+        </button>
+    </a>
+    <hr>
+    {% endfor %}
+    {% endif %}
+</div>
+<a href="/addblog">
+    <button type="button" class="btn btn-light">
+        Add New Blog
+    </button>
+</a>
+
+
+</div>
+
+
+{% endblock content %}
